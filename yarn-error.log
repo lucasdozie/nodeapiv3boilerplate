@@ -1,0 +1,35 @@
+Arguments: 
+  /usr/local/Cellar/node/12.12.0/bin/node /usr/local/bin/yarn add express mongoose body-parser jsonwebtoken moment swagger-ui-express axios multer
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/lucasdozie/Library/Android/sdk/emulator:/Users/lucasdozie/Library/Android/sdk/tools:/Users/lucasdozie/Library/Android/sdk/tools/bin:/Users/lucasdozie/Library/Android/sdk/platform-tools:/Users/lucasdozie/Library/Android/sdk/emulator:/Users/lucasdozie/Library/Android/sdk/tools:/Users/lucasdozie/Library/Android/sdk/tools/bin:/Users/lucasdozie/Library/Android/sdk/platform-tools
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.12.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/kareem/-/kareem-2.3.1.tgz: ETIMEDOUT
+      at Timeout._onTimeout (/usr/local/lib/node_modules/yarn/lib/cli.js:141408:19)
+      at listOnTimeout (internal/timers.js:531:17)
+      at processTimers (internal/timers.js:475:7)
+
+npm manifest: 
+  {
+    "name": "thrive-bank-api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Imo Nnadozie",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
