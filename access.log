@@ -1,3 +1,7 @@
 ::1 - - [13/May/2020:16:06:23 +0000] "GET /api/v1/ HTTP/1.1" 500 1705 "-" "PostmanRuntime/7.22.0"
 ::1 - - [13/May/2020:16:06:51 +0000] "GET /api/v1/ HTTP/1.1" 500 1705 "-" "PostmanRuntime/7.22.0"
 ::1 - - [13/May/2020:16:07:41 +0000] "GET /api/v1/ HTTP/1.1" 200 55 "-" "PostmanRuntime/7.22.0"
+::1 - - [18/May/2020:11:33:06 +0000] "GET /api/v1/ HTTP/1.1" 404 146 "-" "PostmanRuntime/7.22.0"
+::1 - - [18/May/2020:11:35:07 +0000] "GET / HTTP/1.1" 200 57 "-" "PostmanRuntime/7.22.0"
+::1 - - [18/May/2020:11:37:17 +0000] "GET /api/v1/ HTTP/1.1" 404 146 "-" "PostmanRuntime/7.22.0"
+::1 - - [18/May/2020:11:39:18 +0000] "GET /api/v1/ HTTP/1.1" 404 146 "-" "PostmanRuntime/7.22.0"
