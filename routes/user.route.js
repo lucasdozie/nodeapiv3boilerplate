@@ -1,15 +1,15 @@
 "use strict";
 
 const RESOURCE = "/api/v1/"
-const routePoint = `${RESOURCE}`
+const routeBase = `${RESOURCE}`
 module.exports = (route) => {
-    route.get(`${routePoint}/test`, (req, res, next) => {
+    route.get(`${routeBase}test`, (req, res, next) => {
         res.status(200).json({
             statusCode: 200,
             message: "Welcome to the good life"
         })
     }),
-    route.get(`${routePoint}/user/all`, (req, res, next) => {
+    route.get(`${routeBase}user/all`, (req, res, next) => {
         res.status(200).json({
             statusCode: 200,
             message: "Request was successful",
