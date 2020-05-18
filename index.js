@@ -7,6 +7,7 @@ const morgan = require("morgan")
 require('dotenv').config()
 
 const cors = require('cors')
+const database = require("./config/database")
 const app = express();
 
 const router = express.Router();
@@ -24,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
+database()
 
 router.get('/', function (req, res, next) {
   res.status(200).json({

@@ -19,16 +19,7 @@ const checkToken = async (req, res, next) => {
     const { id } = isAuthorized;
 
     if (isAuthorized) {
-      // const cachedToken = get(id);
-
-      // if (cachedToken) {
       next();
-      // } else {
-      //   return res.status(401).json({
-      //     status: 401,
-      //     message: 'Invalid user token.',
-      //   });
-      // }
     }
   } catch (err) {
     res.status(401).json({
@@ -54,9 +45,6 @@ const checkIsAdmin = async (req, res, next) => {
     const isAuthorized = await verify(token);
 
     const { id, isAdmin } = isAuthorized;
-
-    // if (isAuthorized) {
-    //   const cachedToken = get(id);
 
     if (id && isAdmin) {
       next();
