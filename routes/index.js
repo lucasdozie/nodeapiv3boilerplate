@@ -1,5 +1,6 @@
 "use strict";
 
-module.exports = Route => {
-    require("./user.route")(Route)
+module.exports = route => {
+    require("./auth.route")(route)
+    require("./user.route")(route)
 }

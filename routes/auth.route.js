@@ -1,6 +1,6 @@
 "use strict";
 const crypto = require("crypto"),
-  bcrypt = require("bcryptjs"),
+ // bcrypt = require("bcryptjs"),
   {
     LoginValidator,
     SignupValidator,
@@ -10,15 +10,16 @@ const crypto = require("crypto"),
   } = require("./../helpers/inputValidator"),
   {BASE_URI} = require("./../config/env");
 
-const RESOURCE_NAME = "agent";
-let ENDPOINT;
-ENDPOINT = `${BASE_URI}/${RESOURCE_NAME}`;
-
+const RESOURCE_NAME = "user";
+let ENDPOINT = `${BASE_URI}${RESOURCE_NAME}`;
+console.log(process.env.HOST,"== |===| ==",ENDPOINT)
 //import * as controller from "../controllers/index";
 const {registerUser, loginUser} = require("./../controller/user/auth.controller"),
      tryCatchWrapper = require("./../helpers/tryCatchWrapper")
 module.exports = router => {
-  // router.get(`/`, controller.auth.testApi);
+  router.get(`${ENDPOINT}/`, () => {
+      console.log("==== Test Endpoint ====")
+  });
 
   //router.get(`${ENDPOINT}/test`, controller.auth.testApi);
 
@@ -42,11 +43,11 @@ module.exports = router => {
   router.post(`${ENDPOINT}/forgot_pword`, ForgotPassword, async (req, res) => {
     try {
       const { email } = req.body;
-      agent = await Agent.findOne({
+      user = await User.findOne({
         email: new RegExp(`^${email}$`, "i")
       });
 
-      if (!agent)
+      if (!user)
         return res.status(404).json({
           status: "failure",
           error: `Agent with the given email ${email} not found`
@@ -56,11 +57,11 @@ module.exports = router => {
       const token = buf.toString("hex");
 
       let time = Date.now() + 1000 * 60 * 60 * 2; //hrs
-      agent.resetPasswordToken = token;
-      agent.resetPasswordExpires = time;
-      const savedAgent = await agent.save();
+      user.resetPasswordToken = token;
+      user.resetPasswordExpires = time;
+      const savedUser = await user.save();
 
-      if (!savedAgent)
+      if (!savedUser)
         return res.status(500).json({
           status: "failure",
           error: `Agent password cannot be changed at this time`

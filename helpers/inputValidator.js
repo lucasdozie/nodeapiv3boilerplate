@@ -37,6 +37,13 @@ module.exports = {
           .min(3)
           .max(30)
           .required(),
+        phone_number: Joi.string()
+          .min(3)
+          .max(15)
+          .required(),
+        gender: Joi.string()
+          .min(3)
+          .max(10),
       })
       .with("email", "password");
 

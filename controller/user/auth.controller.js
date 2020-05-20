@@ -1,9 +1,9 @@
 "use strict";
 const crypto = require("crypto")
-const { createUser, findUser } = require('../database/user/userHelper');
-const { hash, compare } = require('../helpers/bcryptHelper');
-const { sign } = require('../helpers/jwtHelpers');
-const { set } = require('../helpers/redis');
+const User = require("./../../model/user.model")
+const { hash, compare, generateRandomHash } = require('./../../helpers/bcrypt');
+const { sign } = require('./../../helpers/jwt');
+const { set } = require('./../../helpers/redis');
 
 // const register = async (req, res) => {
 //   const hashed = await hash(req.body.password);
@@ -62,26 +62,31 @@ const loginUser = async (req, res) => {
           error: `User with the given email ${email} could not be found`
         });
 
-      // if(!hasher.CheckPassword(password, farmer.password_hash))
-      // if(!CheckPassword(password, agent.password_hash)){
-      if (!w.CheckPassword(password, user.password_hash)) {
-        console.log(
-          password,
-          " password || Not equal || password_hash:.",
-          user.password_hash
-        );
+     let match = await compare(password, user.password_hash)
+      if (!match) {
         return res.status(401).json({
           status: "failure",
           message: "Login failed, wrong information supplied"
         });
       }
-      console.log(
-        password,
-        " password || is equal || password_hash:.",
-        user.password_hash
-      );
+    //   console.log(
+    //     password,
+    //     " password || is equal || password_hash:.",
+    //     user.password_hash
+    //   );
 
-      const token = agent.generateAuthToken();
+      //const token = agent.generateAuthToken();
+      let _signOptions = {
+        id: user.id,
+        email: user.email
+      }
+      
+    let generatedHash = await generateRandomHash()
+      
+
+      const token = await sign(_signOptions)
+      //console.log(generatedHash,"===== generateRandomHash ======",token)
+      set(generatedHash, token);
       return res.status(200).json({
         email: user.email,
         status: "success",
@@ -183,4 +188,4 @@ const reset_pword = async (req, res, next) => {
   }
 };
 
-export { registerUser, loginUser, forgot_pword, reset_pword };
+module.exports = { registerUser, loginUser, forgot_pword, reset_pword };

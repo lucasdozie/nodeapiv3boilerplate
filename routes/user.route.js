@@ -1,15 +1,19 @@
 "use strict";
+const {BASE_URI} = require("./../config/env");
+// const RESOURCE = "/api/v1/"
+// const routeBase = `${RESOURCE}`
 
-const RESOURCE = "/api/v1/"
-const routeBase = `${RESOURCE}`
+//let ENDPOINT;
+const ENDPOINT = `${BASE_URI}`;
+console.log("== |=| ==",ENDPOINT)
 module.exports = (route) => {
-    route.get(`${routeBase}test`, (req, res, next) => {
+    route.get(`${ENDPOINT}test`, (req, res, next) => {
         res.status(200).json({
             statusCode: 200,
             message: "Welcome to the good life"
         })
     }),
-    route.get(`${routeBase}user/all`, (req, res, next) => {
+    route.get(`${ENDPOINT}user/all`, (req, res, next) => {
         res.status(200).json({
             statusCode: 200,
             message: "Request was successful",

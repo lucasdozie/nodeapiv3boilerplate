@@ -3,13 +3,13 @@
 /***********************
  * Module dependencies *
  ***********************/
-const mongoose = require("mongoose"),
+const mongoose = require("mongoose");
 //  jwt = require("jsonwebtoken");
 
 /********************************************
  *     MONGOOSE MODEL CONFIGURATION     *
  *******************************************/
-const agentSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     first_name: {
       type: String,
@@ -86,4 +86,4 @@ const agentSchema = new mongoose.Schema(
 /******************
  * Export schema  *
  ******************/
-module.exports = mongoose.model("User", agentSchema);
+module.exports = mongoose.model("User", userSchema);

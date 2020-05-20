@@ -27,6 +27,44 @@ app.use(bodyParser.urlencoded({
 }));
 database()
 
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Accept");
+  res.header("Content-Type", "application/json");
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  } else {
+    next();
+  }
+});
+
+app.use(async (req, res, next) => {
+  if (
+    req.headers &&
+    req.headers.access_token &&
+    req.headers.access_token.split(" ")[0] === "JWT"
+  ) {
+    // console.log({ middleware: req.headers.access_token.split(" ")[1] });
+    const user = jsonwebtoken.verify(
+      req.headers.access_token.split(" ")[1],
+      process.env.PRIVATE_JWT_SECRET
+    );
+    // console.log("user:.", user);
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      req.user = undefined;
+      next();
+    }
+  } else {
+    req.user = undefined;
+    next();
+  }
+});
+
 router.get('/', function (req, res, next) {
   res.status(200).json({
     "statusCode": 200,

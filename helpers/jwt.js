@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = process.env;
+const { PRIVATE_JWT_SECRET } = process.env;
 
-exports.sign = payload => jwt.sign(payload, JWT_SECRET, { expiresIn: '3h' });
+exports.sign = payload => jwt.sign(payload, PRIVATE_JWT_SECRET, { expiresIn: '3h' });
 
-exports.verify = token => jwt.verify(token, JWT_SECRET);
+exports.verify = token => jwt.verify(token, PRIVATE_JWT_SECRET);
