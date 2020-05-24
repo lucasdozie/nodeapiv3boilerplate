@@ -1,5 +1,5 @@
 {
-  "name": "thrive-bank-api",
+  "name": "nodeapiv3boilerplate",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

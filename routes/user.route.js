@@ -1,9 +1,9 @@
 "use strict";
-const {BASE_URI} = require("./../config/env");
-// const RESOURCE = "/api/v1/"
-// const routeBase = `${RESOURCE}`
-
-//let ENDPOINT;
+const {BASE_URI} = require("./../config/env"),
+  tryCatchWrapper = require("./../helpers/tryCatchWrapper"),
+  {fetchAllUser, fetchUserByIdorEmail, updateUserByEmail, deleteUserByEmail} = require("./../controller/user/user.controller");
+const isAdminMiddleware = require("./../helpers/isAdmin")
+const isLoginMiddleware = require("./../helpers/isLogin")
 const ENDPOINT = `${BASE_URI}`;
 console.log("== |=| ==",ENDPOINT)
 module.exports = (route) => {
@@ -13,11 +13,8 @@ module.exports = (route) => {
             message: "Welcome to the good life"
         })
     }),
-    route.get(`${ENDPOINT}user/all`, (req, res, next) => {
-        res.status(200).json({
-            statusCode: 200,
-            message: "Request was successful",
-            data: [{name: "lucas", role: "Engineering", age: 20},{name: "Joy", role: "Finance", age: 25},{name: "Sola", role: "Growth", age: 30}]
-        })
-    })
+    route.get(`${ENDPOINT}user/all`, isLoginMiddleware, tryCatchWrapper(fetchAllUser)),
+    route.get(`${ENDPOINT}user/findUser`, isLoginMiddleware, tryCatchWrapper(fetchUserByIdorEmail)),
+    route.put(`${ENDPOINT}user/update`, isAdminMiddleware, tryCatchWrapper(updateUserByEmail)),
+    route.delete(`${ENDPOINT}user/delete`, isAdminMiddleware, tryCatchWrapper(deleteUserByEmail))
 }

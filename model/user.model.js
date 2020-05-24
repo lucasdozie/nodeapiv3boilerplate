@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      //unique: true,
+      unique: true,
       trim: true,
       lowercase: true,
       match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -43,6 +43,11 @@ const userSchema = new mongoose.Schema(
     avatar_url: {
       type: String,
       default: null
+    },
+    role: {
+      type: String,
+      default: "regular",
+      enum: ["regular", "admin"]
     },
 
     farmers: [Object],

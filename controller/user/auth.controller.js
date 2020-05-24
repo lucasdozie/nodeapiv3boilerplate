@@ -69,16 +69,11 @@ const loginUser = async (req, res) => {
           message: "Login failed, wrong information supplied"
         });
       }
-    //   console.log(
-    //     password,
-    //     " password || is equal || password_hash:.",
-    //     user.password_hash
-    //   );
-
-      //const token = agent.generateAuthToken();
+    
       let _signOptions = {
         id: user.id,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
       
     let generatedHash = await generateRandomHash()
@@ -116,19 +111,19 @@ const forgot_pword = async (req, res) => {
     const token = buf.toString("hex");
 
     let time = Date.now() + 1000 * 60 * 60 * 2; //hrs
-    agent.resetPasswordToken = token;
-    agent.resetPasswordExpires = time;
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = time;
     const savedUser = await user.save();
 
     if (!savedUser)
       return res.status(500).json({
         status: "failure",
-        error: `Agent password cannot be changed at this time`
+        error: `user password cannot be changed at this time`
       });
 
     // const mailObject = {
     //   email,
-    //   name: agent.first_name,
+    //   name: user.first_name,
     //   templateName: "forgotpassword",
     //   link: `${process.env.HOST}/sign/resetpassword?token=${token}`
     // };
@@ -153,7 +148,7 @@ const reset_pword = async (req, res, next) => {
   try {
     const { newPassword, token } = req.body;
 
-    const agent = await Agent.findOne({
+    const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: {
         $gt: Date.now()
@@ -161,19 +156,19 @@ const reset_pword = async (req, res, next) => {
     });
     // User.find({ resetPasswordToken: token}).where('resetPasswordExpires').gt(Date.now());
 
-    if (!agent)
+    if (!user)
       return res.status(404).json({
         status: "failure",
         error: `Password reset token ${token} is invalid or has expired.`
       });
 
-    agent.resetPasswordToken = null;
-    agent.resetPasswordExpires = null;
-    agent.password = newPassword;
-    await agent.save();
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    user.password = newPassword;
+    await user.save();
     const mailObject = {
-      email: agent.email,
-      name: agent.first_name,
+      email: user.email,
+      name: user.first_name,
       templateName: "passwordresetsuccessful",
       link: `${process.env.HOST}/sign/signin`
     };

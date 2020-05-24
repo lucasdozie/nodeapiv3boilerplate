@@ -41,6 +41,7 @@ module.exports = {
           .min(3)
           .max(15)
           .required(),
+        role: Joi.string(),
         gender: Joi.string()
           .min(3)
           .max(10),
@@ -154,11 +155,11 @@ module.exports = {
         .min(3)
         .max(10)
         .required(),
-      contactAddress: Joi.string()
+      address: Joi.string()
         .min(3)
         .max(100)
         .required(),
-      phone: Joi.string()
+      phone_number: Joi.string()
         .min(5)
         .max(20)
         .required()

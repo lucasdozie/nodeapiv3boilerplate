@@ -2,12 +2,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require("fs")
+const jwt = require("jsonwebtoken")
 const path = require("path")
 const morgan = require("morgan")
 require('dotenv').config()
 
 const cors = require('cors')
 const database = require("./config/database")
+
+let { useBearerToken } = require("./helpers/auth")
 const app = express();
 
 const router = express.Router();
@@ -40,30 +43,8 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(async (req, res, next) => {
-  if (
-    req.headers &&
-    req.headers.access_token &&
-    req.headers.access_token.split(" ")[0] === "JWT"
-  ) {
-    // console.log({ middleware: req.headers.access_token.split(" ")[1] });
-    const user = jsonwebtoken.verify(
-      req.headers.access_token.split(" ")[1],
-      process.env.PRIVATE_JWT_SECRET
-    );
-    // console.log("user:.", user);
-    if (user) {
-      req.user = user;
-      next();
-    } else {
-      req.user = undefined;
-      next();
-    }
-  } else {
-    req.user = undefined;
-    next();
-  }
-});
+//Note I'm using bearer token
+app.use(useBearerToken)
 
 router.get('/', function (req, res, next) {
   res.status(200).json({
